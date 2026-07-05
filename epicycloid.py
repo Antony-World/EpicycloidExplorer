@@ -156,6 +156,7 @@ class Epicycloid:
     def _on_as_img_click(self, _value):
         fig, ax = plt.subplots(figsize=(5, 5))
 
+        ax.set_title(f'Эпициклоида с k = {self._k}')
         ax.set_aspect('equal')
         ax.grid(True, linestyle='--', alpha=0.5)
         ax.plot(self._x_path, self._y_path, 'red', linewidth=2.5)
