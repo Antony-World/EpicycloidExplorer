@@ -13,9 +13,11 @@
 
 ## 📸 Демонстрация работы
 Ниже представлен скриншот работы минималистичной версии:
+
 ![Пример работы (k = 0.5)](https://github.com/Antony-World/EpicycloidExplorer/blob/9f1212ec7a175a87850bf822a285106538014aea/examples/epicycloid_mini.png)
 
 И полной версии:
+
 ![Пример работы (k = 0.25)](https://github.com/Antony-World/EpicycloidExplorer/blob/9f1212ec7a175a87850bf822a285106538014aea/examples/epicycloid.png)
 
 ## 🛠️ Запуск и требования
