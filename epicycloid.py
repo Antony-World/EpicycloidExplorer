@@ -12,7 +12,7 @@ class Epicycloid:
         self._r = self._R / self._k
         self._need_anims = True
 
-        self._theta_values = None
+        self._phi_values = None
         self._x_path = None
         self._y_path = None
         self._compute_path(self._k)
@@ -39,9 +39,9 @@ class Epicycloid:
         period = Fraction(k + 1).limit_denominator(1000).denominator
         total_angle = 2 * np.pi * period
         step = 200 * period
-        self._theta_values = np.linspace(0, total_angle, step)
-        self._x_path = r * ((k + 1) * np.cos(self._theta_values) - np.cos(self._theta_values * (k + 1)))
-        self._y_path = r * ((k + 1) * np.sin(self._theta_values) - np.sin(self._theta_values * (k + 1)))
+        self._phi_values = np.linspace(0, total_angle, step)
+        self._x_path = r * ((k + 1) * np.cos(self._phi_values) - np.cos(self._phi_values * (k + 1)))
+        self._y_path = r * ((k + 1) * np.sin(self._phi_values) - np.sin(self._phi_values * (k + 1)))
         self._r = r
 
     def _set_limits(self):
@@ -87,9 +87,9 @@ class Epicycloid:
 
         k = self._k
         r = self._r
-        t0 = self._theta_values[0]
-        cx = r * (k + 1) * np.cos(t0)
-        cy = r * (k + 1) * np.sin(t0)
+        phi0 = self._phi_values[0]
+        cx = r * (k + 1) * np.cos(phi0)
+        cy = r * (k + 1) * np.sin(phi0)
         self._green_circle.center = (cx, cy)
         self._point_C.set_data([cx], [cy])
         bx, by = self._x_path[0], self._y_path[0]
@@ -107,10 +107,10 @@ class Epicycloid:
 
         self._ani = FuncAnimation(
             self._figure, self._update_graph,
-            frames=len(self._theta_values),
+            frames=len(self._phi_values),
             interval=10,
             repeat=True,
-            repeat_delay=2000,
+            repeat_delay=2500,
             cache_frame_data=False
         )
 
@@ -171,12 +171,12 @@ class Epicycloid:
         plt.close(fig)
 
     def _update_graph(self, frame):
-        t_current = self._theta_values[frame]
+        phi_current = self._phi_values[frame]
         k = self._k
         r = self._r
 
-        cx = r * (k + 1) * np.cos(t_current)
-        cy = r * (k + 1) * np.sin(t_current)
+        cx = r * (k + 1) * np.cos(phi_current)
+        cy = r * (k + 1) * np.sin(phi_current)
         self._green_circle.center = (cx, cy)
         self._point_C.set_data([cx], [cy])
 
