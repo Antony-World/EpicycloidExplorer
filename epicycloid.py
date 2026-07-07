@@ -25,7 +25,9 @@ class Epicycloid:
         self._figure, self._axes = plt.subplots(figsize=(8, 8))
 
         self._figure.canvas.manager.set_window_title(title)
-        self._figure.canvas.window().setMinimumSize(650, 650)
+        match plt.get_backend():
+            case 'qtagg': self._figure.canvas.window().setMinimumSize(650, 650)
+            case 'tkagg': self._figure.canvas.window().minsize(650, 650)
         self._figure.tight_layout(pad=1)
         self._axes.set_aspect('equal')
         self._axes.grid(True, linestyle='--', alpha=0.5)
