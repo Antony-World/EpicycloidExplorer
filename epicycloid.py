@@ -12,9 +12,10 @@ class Epicycloid:
         self._r = self._R / self._k
         self._need_anims = True
 
-        self._phi_values = None
         self._x_path = None
         self._y_path = None
+        self._phi_values = None
+        self._frames = None
         self._compute_path(self._k)
 
         self._ani = None
@@ -38,11 +39,16 @@ class Epicycloid:
         r = self._R / k
         period = Fraction(k + 1).limit_denominator(1000).denominator
         total_angle = 2 * np.pi * period
-        step = 200 * period
+        step = 500 * period
         self._phi_values = np.linspace(0, total_angle, step)
         self._x_path = r * ((k + 1) * np.cos(self._phi_values) - np.cos(self._phi_values * (k + 1)))
         self._y_path = r * ((k + 1) * np.sin(self._phi_values) - np.sin(self._phi_values * (k + 1)))
         self._r = r
+
+        frame_step = max(1, len(self._phi_values) // 250)
+        self._frames = list(range(0, len(self._phi_values), frame_step))
+        if self._frames[-1] != len(self._phi_values) - 1:
+            self._frames.append(len(self._phi_values) - 1)
 
     def _set_limits(self):
         lim = self._R + 2 * self._r + 5
@@ -107,7 +113,7 @@ class Epicycloid:
 
         self._ani = FuncAnimation(
             self._figure, self._update_graph,
-            frames=len(self._phi_values),
+            frames=len(self._frames),
             interval=10,
             repeat=True,
             repeat_delay=2500,
@@ -171,7 +177,8 @@ class Epicycloid:
         plt.close(fig)
 
     def _update_graph(self, frame):
-        phi_current = self._phi_values[frame]
+        idx = self._frames[frame]
+        phi_current = self._phi_values[idx]
         k = self._k
         r = self._r
 
@@ -180,11 +187,11 @@ class Epicycloid:
         self._green_circle.center = (cx, cy)
         self._point_C.set_data([cx], [cy])
 
-        bx, by = self._x_path[frame], self._y_path[frame]
+        bx, by = self._x_path[idx], self._y_path[idx]
         self._radius.set_data([bx, cx], [by, cy])
         self._point_B.set_data([bx], [by])
 
-        self._red_line.set_data(self._x_path[:frame + 1], self._y_path[:frame + 1])
+        self._red_line.set_data(self._x_path[:idx + 1], self._y_path[:idx + 1])
 
         return self._red_line, self._green_circle, self._radius, self._point_B, self._point_C
 
