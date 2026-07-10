@@ -7,7 +7,7 @@ k = float(input('Введите k: '))
 R = 10
 r = R / k
 
-total_angle = 2 * np.pi * Fraction(k).limit_denominator().denominator
+total_angle = 2 * np.pi * Fraction(k).limit_denominator(10000).denominator
 theta_values = np.linspace(0, total_angle, 10000)
 x_path = r * ((k + 1) * np.cos(theta_values) - np.cos(theta_values * (k + 1)))
 y_path = r * ((k + 1) * np.sin(theta_values) - np.sin(theta_values * (k + 1)))
